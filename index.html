@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Token Queue — Eficiência Técnica, Filosofia e Orquestração Agêntica</title>
+    
+    <!-- Google Fonts: Cinzel & Cormorant Garamond (Atelier Filosófico) + Space Mono & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="theme-dark">
+    <!-- Canvas WebGL Fixo no Fundo -->
+    <div id="webgl-container"></div>
+
+    <!-- HUD Superior Fixo Editorial -->
+    <header class="hud-top">
+      <div class="hud-brand">
+        <span class="hud-glitch-badge">SYS.STATUS</span>
+        <span class="hud-title">THE TOKEN QUEUE</span>
+      </div>
+      <div class="hud-center">
+        <div class="act-indicator">
+          <span class="act-label">FASE ATUAL:</span>
+          <span class="act-value" id="current-act-tag">FILA DE RECURSOS</span>
+        </div>
+      </div>
+      <div class="hud-right">
+        <div class="quota-pill status-danger" id="quota-status-pill">
+          <span class="status-dot"></span>
+          <span id="quota-text">RPM: 0/15 [EXCEDIDO]</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Barra de Progresso Editorial Fixa -->
+    <div class="scroll-progress-bar">
+      <div class="scroll-progress-fill" id="progress-fill"></div>
+    </div>
+
+    <!-- HUD Inferior Fixo -->
+    <footer class="hud-bottom">
+      <div class="hud-coords">
+        <span>LAT: -23.5505</span>
+        <span>PIPELINE: MULTI-AGENT-SYSTEM</span>
+      </div>
+      <div class="hud-instruction">
+        <span class="scroll-chevron">&darr;</span> ROLAGEM CRONOLOGICA
+      </div>
+    </footer>
+
+    <!-- Conteúdo Scrollytelling -->
+    <main class="scrolly-container" id="scroll-content">
+      
+      <!-- Fila de Espera por Recursos -->
+      <section class="act act-1" id="act-1">
+        <div class="act-inner">
+          <div class="act-meta">
+            <span class="act-tagline">NIVEL DE ACESSO: CAMADA COMPARTILHADA</span>
+          </div>
+          
+          <h1 class="act-title text-brutalist">
+            A FILA DE ESPERA <br /><span class="highlight-danger">POR RECURSOS.</span>
+          </h1>
+          
+          <p class="act-description text-mono">
+            A taxa de transferência foi atingida durante uma solicitação crítica de engenharia.
+            O processamento é interrompido no meio da resposta devido ao compartilhamento de cota com milhares de outros usuários simultâneos.
+          </p>
+
+          <!-- Alerta Flutuante Estilizado -->
+          <div class="error-card glass-panel">
+            <div class="error-header">
+              <span class="error-code">HTTP 429: TOO MANY REQUESTS</span>
+              <span class="error-time" id="countdown-timer">04:12:44</span>
+            </div>
+            <div class="error-body text-mono">
+              <p>&gt; Cota esgotada na camada gratuita de processamento.</p>
+              <p>&gt; Limite de 15 requisições por minuto atingido no nó atual.</p>
+              <p class="error-action">&gt; Nova janela de execução disponível após liberação da fila de espera.</p>
+            </div>
+            <div class="error-footer">
+              <span class="status-indicator-blink">PAUSADO</span>
+              <span class="rpm-meter">0.0 RPM / 0 TOKENS</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- O Processamento Manual de Contexto -->
+      <section class="act act-2" id="act-2">
+        <div class="act-inner">
+          <div class="act-meta">
+            <span class="act-tagline">A SOBRECARGA OPERACIONAL MANUAL</span>
+          </div>
+
+          <h2 class="act-title text-brutalist">
+            O PROCESSAMENTO <br /><span class="highlight-mono">MANUAL DE CONTEXTO.</span>
+          </h2>
+
+          <p class="act-description text-mono">
+            O fluxo de desenvolvimento torna-se dependente de transferências constantes e manuais de dados entre telas.
+            Copiar blocos, sincronizar arquivos, contornar respostas truncadas e gerenciar contexto em dezenas de abas consomem energia intelectual que deveria estar no produto.
+          </p>
+
+          <!-- Chips Fictícios sem Emojis -->
+          <div class="floating-chips-grid">
+            <div class="chip glass-chip">[Ctrl+C] Copiar resposta do chat</div>
+            <div class="chip glass-chip">[Ctrl+V] Colar no editor local</div>
+            <div class="chip glass-chip highlight-chip">[Reescreva sem omitir código completo]</div>
+            <div class="chip glass-chip">[Continue o bloco de código truncado]</div>
+            <div class="chip glass-chip">[O modelo sobrescreveu as rotas existentes]</div>
+            <div class="chip glass-chip">[Reconverter implementação para TypeScript]</div>
+          </div>
+
+          <div class="metric-row text-mono">
+            <div class="metric-box">
+              <span class="metric-num">50+</span>
+              <span class="metric-label">Janelas de Chat Abertas</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-num">98.4%</span>
+              <span class="metric-label">Contexto Perdido em Sessões</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-num">3h 42m</span>
+              <span class="metric-label">Gastos com Ajustes Manuais</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- A Transição para Infraestrutura Dedicada -->
+      <section class="act act-3" id="act-3">
+        <div class="act-inner center-text">
+          <div class="act-meta">
+            <span class="act-tagline">DESBLOQUEIO DE INFRAESTRUTURA DEDICADA</span>
+          </div>
+
+          <h2 class="act-title text-brutalist glow-title">
+            A TRANSIÇÃO <br /><span class="highlight-electric">PARA INFRAESTRUTURA DEDICADA.</span>
+          </h2>
+
+          <p class="act-description text-mono max-w-prose">
+            Ao ativar recursos computacionais dedicados, as restrições de concorrência são removidas.
+            O tempo de resposta cai drasticamente e o sistema deixa de depender de sessões isoladas de chat para adotar ambientes contínuos de execução.
+          </p>
+
+          <!-- Holographic Card Overlay Card HUD -->
+          <div class="luxury-card-hud glass-panel">
+            <div class="card-chip-hologram"></div>
+            <div class="card-hud-info">
+              <div class="card-title-gold">SEU CARTÃO DE CRÉDITO</div>
+              <div class="card-number-mask">&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 2049</div>
+              <div class="card-meta-row">
+                <span>PLANO ATIVO: 2026</span>
+                <span class="tier-badge">ACESSO DEDICADO</span>
+              </div>
+            </div>
+            <div class="card-shatter-prompt text-mono">
+              [ TRANSIÇÃO DE INFRAESTRUTURA: ATIVAÇÃO DE FLUXO AGÊNTICO INTEGRADO ]
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Orquestração Autônoma de Agentes -->
+      <section class="act act-4" id="act-4">
+        <div class="act-inner">
+          <div class="act-meta">
+            <span class="act-tagline">ARQUITETURA DE MULTI-AGENTES</span>
+          </div>
+
+          <h2 class="act-title text-brutalist">
+            ORQUESTRAÇÃO <br /><span class="highlight-cyan">AUTÔNOMA DE AGENTES.</span>
+          </h2>
+
+          <p class="act-description text-mono">
+            A arquitetura evolui de mensagens isoladas para um pipeline estruturado.
+            Você define as especificações e objetivos de alto nível enquanto agentes especializados colaboram em paralelo para projetar, validar e testar a solução completa.
+          </p>
+
+          <!-- Terminal Minimalista com Logs Técnicos Neutros -->
+          <div class="agent-terminal glass-panel">
+            <div class="terminal-bar">
+              <div class="terminal-dots">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <div class="terminal-title">multi-agent-orchestrator — pipeline — 80x24</div>
+              <div class="terminal-badge">PIPELINE ATIVO</div>
+            </div>
+            
+            <div class="terminal-logs text-mono" id="terminal-feed">
+              <div class="log-line log-primary">
+                <span class="log-prompt">&gt;</span>
+                <span class="log-cmd">agent-orchestrator --pipeline --deploy "Full Architecture"</span>
+              </div>
+              <div class="log-line">
+                <span class="log-agent">[Supervisor Agent]</span> Decompondo arquitetura em 5 módulos e dependências... <span class="badge-ok">[OK]</span>
+              </div>
+              <div class="log-line">
+                <span class="log-agent">[Subagent 3D]</span> Gerando cenas WebGL, iluminação e shaders de alta precisão... <span class="badge-ok">[OK]</span>
+              </div>
+              <div class="log-line">
+                <span class="log-agent">[Subagent Scrolly]</span> Integrando controle de scroll suave com gatilhos de viewport... <span class="badge-ok">[OK]</span>
+              </div>
+              <div class="log-line">
+                <span class="log-agent">[Subagent Quality]</span> 0 falhas de compilação, integridade de tipos confirmada... <span class="badge-ok">[OK]</span>
+              </div>
+              <div class="log-line log-success">
+                <span class="log-agent">[Execution Engine]</span> Sistema completo entregue e operacional sem intervenção manual repetitiva. <span class="badge-sovereign">CONCLUÍDO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- O Simpósio da Automação & Balanço de Produtividade -->
+      <section class="act act-5" id="act-5">
+        <div class="act-inner center-text">
+          <div class="act-meta">
+            <span class="act-tagline">ATELIER FILOSÓFICO NEOCLÁSSICO</span>
+          </div>
+
+          <h2 class="act-title text-serif-monumental highlight-bronze">
+            O SIMPÓSIO DA AUTOMAÇÃO
+          </h2>
+
+          <p class="act-description text-editorial-serif max-w-prose">
+            A questão que define a nossa época não é a velocidade do algoritmo, mas o destino do tempo de quem o utiliza. Três perspectivas clássicas sobre o valor da vida e a essência da técnica.
+          </p>
+
+          <!-- DEBATE FILOSÓFICO INTERATIVO (SÊNECA, ARISTÓTELES, HEIDEGGER) -->
+          <div class="philosophy-symposium glass-panel">
+            <!-- Navegador dos Pensadores -->
+            <div class="philosophy-nav">
+              <button class="phil-tab is-active" data-philosopher="seneca">
+                <span class="phil-author">LÚCIO ANNEO SÊNECA</span>
+                <span class="phil-work">De Brevitate Vitae (49 d.C.)</span>
+              </button>
+              <button class="phil-tab" data-philosopher="aristotle">
+                <span class="phil-author">ARISTÓTELES</span>
+                <span class="phil-work">Política, Livro I (350 a.C.)</span>
+              </button>
+              <button class="phil-tab" data-philosopher="heidegger">
+                <span class="phil-author">MARTIN HEIDEGGER</span>
+                <span class="phil-work">Die Frage nach der Technik (1954)</span>
+              </button>
+            </div>
+
+            <!-- Palco do Discurso Filosófico -->
+            <div class="philosophy-stage">
+              <!-- Sêneca -->
+              <article class="phil-content is-active" id="phil-seneca">
+                <div class="phil-quote-mark">&ldquo;</div>
+                <blockquote class="phil-quote text-serif">
+                  Não temos exatamente uma vida curta, mas desperdiçamos grande parte dela. A vida é suficientemente longa para a realização das mais altas tarefas, desde que bem aplicada. Mas quando se esvai no luxo e na distração, quando não é gasta em nada de bom, somos forçados a reconhecer que já se foi sem que tenhamos percebido sua passagem.
+                </blockquote>
+                <div class="phil-thesis text-mono">
+                  <span class="thesis-tag">TESE SOBRE O TEMPO:</span>
+                  <p>Passar horas do dia intermediando manualmente janelas de chat, copiando fragmentos de código e esperando resets de cota não é trabalho intelectual: é dilapidação voluntária do tempo de vida que você jamais poderá recomprar.</p>
+                </div>
+              </article>
+
+              <!-- Aristóteles -->
+              <article class="phil-content" id="phil-aristotle">
+                <div class="phil-quote-mark">&ldquo;</div>
+                <blockquote class="phil-quote text-serif">
+                  Se cada instrumento pudesse realizar seu trabalho sob comando ou por antecipação inteligente — como as estátuas de Dédalo ou os trípodes de Hefesto que se moviam por si sós —, se as lançadeiras tecessem sozinhas e as palhetas tocassem as cítaras sem mãos humanas, nem os mestres precisariam de servos, nem os arquitetos de ajudantes braçais.
+                </blockquote>
+                <div class="phil-thesis text-mono">
+                  <span class="thesis-tag">TESE SOBRE A AUTONOMIA:</span>
+                  <p>Sistemas autônomos de ponta a ponta não diminuem o ser humano; ao contrário, cumprem a profecia aristotélica de emancipar a mente das tarefas mecânicas repetitivas para que o arquiteto possa exercer a pura contemplação (theoria) e a verdadeira criação.</p>
+                </div>
+              </article>
+
+              <!-- Heidegger -->
+              <article class="phil-content" id="phil-heidegger">
+                <div class="phil-quote-mark">&ldquo;</div>
+                <blockquote class="phil-quote text-serif">
+                  A essência da técnica moderna não é nada de técnico. O perigo supremo não reside nas máquinas, mas no modo como a técnica impõe sua lógica (Ge-stell), transformando todas as coisas — inclusive o próprio ser humano — em mero estoque disponível de reserva e esteira de transmissão.
+                </blockquote>
+                <div class="phil-thesis text-mono">
+                  <span class="thesis-tag">TESE SOBRE A TÉCNICA:</span>
+                  <p>Quando o desenvolvedor passa o dia colando prompts e contornando limites artificiais de contexto, ele se rebaixou a componente de suporte do LLM. O fluxo agêntico restaura o papel do criador como pensador estratégico, restituindo a clareza da intenção humana.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- BALANÇO DE PRODUTIVIDADE & CALCULADORA NEOCLÁSSICA -->
+          <div class="calculator-container glass-panel">
+            <div class="calculator-header">
+              <span class="calc-label text-mono">SIMULADOR DE RESGATE DE TEMPO OPERACIONAL</span>
+              <span class="calc-badge">ANÁLISE DE PRODUTIVIDADE</span>
+            </div>
+
+            <!-- Slider Interativo -->
+            <div class="slider-control">
+              <div class="slider-labels text-mono">
+                <span>Horas semanais consumidas em operações manuais de chat:</span>
+                <span class="slider-val" id="hours-display">12 h/semana</span>
+              </div>
+              <input 
+                type="range" 
+                id="hours-slider" 
+                min="2" 
+                max="40" 
+                value="12" 
+                class="custom-slider"
+              />
+            </div>
+
+            <!-- Painel Dividido da Balança Neoclássica -->
+            <div class="balance-grid">
+              <!-- Lado Básico -->
+              <div class="balance-side side-free">
+                <div class="side-badge badge-free">OPERAÇÃO MANUAL BÁSICA</div>
+                <div class="stat-highlight text-danger" id="free-prompts-lost">576</div>
+                <div class="stat-desc text-mono">transferências manuais repetitivas</div>
+                <ul class="stat-list text-mono">
+                  <li>&bull; 0 entregas automatizadas contínuas</li>
+                  <li>&bull; Pausas forçadas por esgotamento de taxa</li>
+                  <li>&bull; Sobrecarga constante de fragmentação mental</li>
+                </ul>
+              </div>
+
+              <!-- Lado Agêntico -->
+              <div class="balance-side side-agentic">
+                <div class="side-badge badge-agent">FLUXO AGÊNTICO INTEGRADO</div>
+                <div class="stat-highlight text-sovereign" id="agentic-commands">1</div>
+                <div class="stat-desc text-mono">diretriz arquitetural de alto nível</div>
+                <ul class="stat-list text-mono">
+                  <li>&bull; Pipeline executado e validado de ponta a ponta</li>
+                  <li>&bull; Multi-agentes especializados em paralelo</li>
+                  <li>&bull; Tempo preservado para estudo, criação e vida</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Script Principal -->
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
